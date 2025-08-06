@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <style>
+        body {
+            background-color: white;
+        }
+        #game{
+            width: 500px;
+            height: 200px;
+            border: 1px solid black;
+            position: relative;
+        }
+        #dino{
+            width: 20px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+            bottom: 0px;
+            
+        }
+        #block{
+            width: 20px;
+            height: 20px;
+            background-color: green;
+            position: absolute;
+            bottom: 0px;
+            left: 450px;
+            animation: block 1s linear infinite;
+        }
+        @keyframes block {
+            0%{
+                left: 450px;
+            }
+            100%{
+                left: -20px;
+            }
+        }
+
+        .jumpClass{
+            animation: jump 0.3s linear infinite;
+        };
+        @keyframes jump {
+            0%{
+                bottom: 0px;
+            }
+            30%{
+                bottom: 100px;
+            }
+            70%{
+                bottom: 100px;
+            }
+            100%{
+                bottom: 0px;
+            }
+        };
+    </style>
+</head>
+<body>
+    
+    <div id="game">
+        <div id="dino"></div>
+        <div id="block"></div>
+    </div>
+    <script>
+        const dino=document.querySelector("#dino")
+        const block=document.querySelector("#block")
+        window.addEventListener('keydown',event =>
+         {
+            console.log(event);
+            if (event.code == "Space"){
+                console.log("空格被按下")
+                dino.classList.add("jumpClass")
+                setTimeout(()=>{
+                    dino.classList.remove("jumpClass")
+                },300)
+            }
+        });
+        setInterval(()=>{
+            const dinoBotton=parseFloat(
+                getComputedStyle(dino).getPropertyValue('botton')
+            );
+            const blockLeft=parseFloat(
+                getComputedStyle(block).getPropertyValue('left')
+            );
+            if (blockLeft<20&&blockLeft>-20&&dinoBotton<=20){
+                console.log('游戏结束')
+            }
+        })
+    </script>
+</body>
+</html>
